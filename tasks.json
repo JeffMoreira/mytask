@@ -1,0 +1,9 @@
+[
+    {
+        "id": "1",
+        "description": "Comprar roupa",
+        "status": "todo",
+        "createdAt": "2024-10-22",
+        "updatedAt": "2024-10-22"
+    }
+]

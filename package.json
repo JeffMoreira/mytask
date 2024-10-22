@@ -1,0 +1,15 @@
+{
+  "name": "mytask",
+  "version": "1.0.0",
+  "description": "Tasks management",
+  "main": "cli.js",
+  "bin": {
+    "mytask": "./cli.js"
+  },
+  "scripts": {
+    "test": "node cli.js",
+    "start": "node cli.js"
+  },
+  "author": "Jefferson Moreira",
+  "license": "ISC"
+}
