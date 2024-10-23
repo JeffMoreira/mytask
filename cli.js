@@ -24,8 +24,24 @@ rl.on('line', (answer) => {
             console.log('delete task')
             break;
         case 'list':
+                
             if(command.length == 1){
                 console.log(tasks)
+            }else{
+                switch (command[1]) {
+                    case 'todo':
+                        
+                        break;
+                    case 'in-progress':
+                        
+                        break;
+                    case 'done':
+                        
+                        break;
+                
+                    default:
+                        break;
+                }
             }
 
             break;
