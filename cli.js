@@ -24,21 +24,24 @@ rl.on('line', (answer) => {
             console.log('delete task')
             break;
         case 'list':
-                
-            if(command.length == 1){
-                console.log(tasks)
-            }else{
+
+            if (command.length == 1) {
+                functions.printTasks(tasks)
+            } else {
                 switch (command[1]) {
                     case 'todo':
-                        
+                        todoTasks = tasks.filter((a) => a.status == 'todo')
+                        functions.printTasks(todoTasks)
                         break;
                     case 'in-progress':
-                        
+                        inProgressTasks = tasks.filter((a) => a.status == 'in-progress')
+                        functions.printTasks(inProgressTasks)
                         break;
                     case 'done':
-                        
+                        doneTasks = tasks.filter((a) => a.status == 'done')
+                        functions.printTasks(doneTasks)
                         break;
-                
+
                     default:
                         break;
                 }
@@ -54,12 +57,12 @@ rl.on('line', (answer) => {
         case 'mark-todo':
             console.log('move to todo task')
             break;
-    
+
         default:
             console.log('Command not supported.')
             break;
     }
-    
 
+    console.log('')
 
 });

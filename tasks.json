@@ -5,5 +5,34 @@
         "status": "todo",
         "createdAt": "2024-10-22",
         "updatedAt": "2024-10-22"
+    },
+    {
+        "id": "2",
+        "description": "Comprar tenis",
+        "status": "todo",
+        "createdAt": "2024-10-22",
+        "updatedAt": "2024-10-22"
+    },
+    {
+        "id": "3",
+        "description": "Comprar tenis",
+        "status": "done",
+        "createdAt": "2024-10-22",
+        "updatedAt": "2024-10-22"
+    },
+    {
+        "id": "4",
+        "description": "Comprar tenis",
+        "status": "done",
+        "createdAt": "2024-10-22",
+        "updatedAt": "2024-10-22"
+    },
+    {
+        "id": "5",
+        "description": "Comprar tenis",
+        "status": "in-progress",
+        "createdAt": "2024-10-22",
+        "updatedAt": "2024-10-22"
     }
+
 ]

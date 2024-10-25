@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = './tasks.json';
+
 function loadOrCreateJSON() {
     let data;
 
@@ -23,4 +24,11 @@ function loadOrCreateJSON() {
 
     return data;
 }
-module.exports = {loadOrCreateJSON}
+
+function printTasks(tasks){
+    console.log('id | descrição | status | data add | data update')
+    tasks.forEach(task => {
+        console.log(task.id, ' | ', task.description, ' | ', task.status, ' | ', task.createdAt, ' | ', task.updatedAt)
+    });
+}
+module.exports = {loadOrCreateJSON, printTasks}
