@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = './tasks.json';
 
+//Read the tasks
 function loadOrCreateJSON() {
     let data;
 
@@ -25,6 +26,7 @@ function loadOrCreateJSON() {
     return data;
 }
 
+// Format de tasks
 function printTasks(tasks){
     console.log('id | descrição | status | data add | data update')
     tasks.forEach(task => {
@@ -32,6 +34,7 @@ function printTasks(tasks){
     });
 }
 
+//Save the tasks
 function saveAlteration(tasks){
     newTasks = JSON.stringify(tasks)
     fs.writeFile(path, newTasks, (err) => {

@@ -11,14 +11,17 @@ tasks = functions.loadOrCreateJSON();
 const rl = readline.createInterface({ input, output });
 
 rl.on('line', (answer) => {
+
+    //Regex to handle double quotes
     command = answer.match(/"[^"]*"|\S+/g);
 
-    // Função para formatar a data como AAAA-MM-DD
+    // format the date as YYYY-MM-DD
     const dataAtual = new Date();
     const formatoData = dataAtual.getFullYear() + '-' +
         String(dataAtual.getMonth() + 1).padStart(2, '0') + '-' +
         String(dataAtual.getDate()).padStart(2, '0');
 
+    //Commands handle : Have a lot to improve, but works
     switch (command[0]) {
         case 'add':
             taskDesc = command[1].replaceAll('"', '')
@@ -34,27 +37,33 @@ rl.on('line', (answer) => {
 
             tasks.push(newTask)
             functions.saveAlteration(tasks)
-            console.log("Task criada com sucesso !")
+            console.log("Task created successfully!")
             break;
         case 'update':
             id = command[1]
-            taskToUpdate = tasks.find(obj => obj.id === id);
+
             if (taskToUpdate) {
                 taskToUpdate.description = command[2].replaceAll('"', '')
                 taskToUpdate.updatedAt = formatoData
                 functions.saveAlteration(tasks)
-                console.log("Task ", id, ' atualizada com sucesso! ')
+                console.log("Task ", id, ' updated successfully! ')
             } else {
-                console.log('Task não encontrada !')
+                console.log('Task not found !')
             }
 
             break;
         case 'del':
             id = command[1]
-            tasks = tasks.filter(obj => obj.id !== id);
+            taskToDelete = tasks.find(obj => obj.id === id);
             //TODO: Verificar se a task existe
-            functions.saveAlteration(tasks)
-            console.log("Task ", id, ' deletada com sucesso! ')
+            if (taskToDelete) {
+                tasks = tasks.filter(obj => obj.id !== id);
+                functions.saveAlteration(tasks)
+                console.log("Task ", id, ' deleted successfully! ')
+            } else {
+                console.log('Task not found !')
+            }
+
             break;
         case 'list':
 
@@ -90,7 +99,7 @@ rl.on('line', (answer) => {
                 functions.saveAlteration(tasks)
                 console.log('Task moved to in progress !')
             } else {
-                console.log('Task não encontrada !')
+                console.log('Task not found !')
             }
 
             break;
@@ -103,7 +112,7 @@ rl.on('line', (answer) => {
                 functions.saveAlteration(tasks)
                 console.log('Task moved to done !')
             } else {
-                console.log('Task não encontrada !')
+                console.log('Task not found !')
             }
 
             break;
@@ -116,7 +125,7 @@ rl.on('line', (answer) => {
                 functions.saveAlteration(tasks)
                 console.log('Task moved to To do !')
             } else {
-                console.log('Task não encontrada !')
+                console.log('Task not found !')
             }
 
             break;
