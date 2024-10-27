@@ -31,4 +31,15 @@ function printTasks(tasks){
         console.log(task.id, ' | ', task.description, ' | ', task.status, ' | ', task.createdAt, ' | ', task.updatedAt)
     });
 }
-module.exports = {loadOrCreateJSON, printTasks}
+
+function saveAlteration(tasks){
+    newTasks = JSON.stringify(tasks)
+    fs.writeFile(path, newTasks, (err) => {
+        if (err) {
+            console.error('Erro ao escrever no arquivo:', err);
+            return;
+        }
+    });
+}
+
+module.exports = {loadOrCreateJSON, printTasks, saveAlteration}

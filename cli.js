@@ -11,11 +11,29 @@ const tasks = functions.loadOrCreateJSON();
 const rl = readline.createInterface({ input, output });
 
 rl.on('line', (answer) => {
-    command = answer.split(' ')
-
+    command = answer.match(/"[^"]*"|\S+/g);
+    
     switch (command[0]) {
         case 'add':
-            console.log('add task')
+            taskDesc = command[1].replaceAll('"', '')
+            proxId = Number(tasks.reduce((max, obj) => obj.id > max ? obj.id : max, 0)) + 1;
+            const dataAtual = new Date();
+
+            // Função para formatar a data como AAAA-MM-DD
+            const formatoData = dataAtual.getFullYear() + '-' +
+                String(dataAtual.getMonth() + 1).padStart(2, '0') + '-' +
+                String(dataAtual.getDate()).padStart(2, '0');
+
+            newTask = {
+                id : proxId.toString(),
+                description: taskDesc,
+                status: 'todo',
+                createdAt: formatoData,
+                updatedAt: formatoData
+            } 
+
+            tasks.push(newTask)
+            console.log("Task criada com sucesso !")
             break;
         case 'update':
             console.log('update task')
@@ -63,6 +81,7 @@ rl.on('line', (answer) => {
             break;
     }
 
+    functions.saveAlteration(tasks)
     console.log('')
 
 });
