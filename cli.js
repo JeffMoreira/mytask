@@ -13,11 +13,11 @@ const rl = readline.createInterface({ input, output });
 rl.on('line', (answer) => {
     command = answer.match(/"[^"]*"|\S+/g);
 
-     // Função para formatar a data como AAAA-MM-DD
+    // Função para formatar a data como AAAA-MM-DD
     const dataAtual = new Date();
     const formatoData = dataAtual.getFullYear() + '-' +
-                String(dataAtual.getMonth() + 1).padStart(2, '0') + '-' +
-                String(dataAtual.getDate()).padStart(2, '0');
+        String(dataAtual.getMonth() + 1).padStart(2, '0') + '-' +
+        String(dataAtual.getDate()).padStart(2, '0');
 
     switch (command[0]) {
         case 'add':
@@ -25,30 +25,35 @@ rl.on('line', (answer) => {
             proxId = Number(tasks.reduce((max, obj) => obj.id > max ? obj.id : max, 0)) + 1;
 
             newTask = {
-                id : proxId.toString(),
+                id: proxId.toString(),
                 description: taskDesc,
                 status: 'todo',
                 createdAt: formatoData,
                 updatedAt: formatoData
-            } 
+            }
 
             tasks.push(newTask)
+            functions.saveAlteration(tasks)
             console.log("Task criada com sucesso !")
             break;
         case 'update':
             id = command[1]
             taskToUpdate = tasks.find(obj => obj.id === id);
-            if (taskToUpdate){
+            if (taskToUpdate) {
                 taskToUpdate.description = command[2].replaceAll('"', '')
                 taskToUpdate.updatedAt = formatoData
-            }else{
+                functions.saveAlteration(tasks)
+                console.log("Task ", id, ' atualizada com sucesso! ')
+            } else {
                 console.log('Task não encontrada !')
             }
-            console.log("Task ", id, ' atualizada com sucesso! ')
+
             break;
         case 'del':
             id = command[1]
             tasks = tasks.filter(obj => obj.id !== id);
+            //TODO: Verificar se a task existe
+            functions.saveAlteration(tasks)
             console.log("Task ", id, ' deletada com sucesso! ')
             break;
         case 'list':
@@ -77,13 +82,43 @@ rl.on('line', (answer) => {
 
             break;
         case 'mark-in-progress':
-            console.log('move to in progress task')
+            id = command[1]
+            taskToUpdate = tasks.find(obj => obj.id === id);
+            if (taskToUpdate) {
+                taskToUpdate.status = 'in-progress'
+                taskToUpdate.updatedAt = formatoData
+                functions.saveAlteration(tasks)
+                console.log('Task moved to in progress !')
+            } else {
+                console.log('Task não encontrada !')
+            }
+
             break;
         case 'mark-done':
-            console.log('move to done task')
+            id = command[1]
+            taskToUpdate = tasks.find(obj => obj.id === id);
+            if (taskToUpdate) {
+                taskToUpdate.status = 'done'
+                taskToUpdate.updatedAt = formatoData
+                functions.saveAlteration(tasks)
+                console.log('Task moved to done !')
+            } else {
+                console.log('Task não encontrada !')
+            }
+
             break;
         case 'mark-todo':
-            console.log('move to todo task')
+            id = command[1]
+            taskToUpdate = tasks.find(obj => obj.id === id);
+            if (taskToUpdate) {
+                taskToUpdate.status = 'todo'
+                taskToUpdate.updatedAt = formatoData
+                functions.saveAlteration(tasks)
+                console.log('Task moved to To do !')
+            } else {
+                console.log('Task não encontrada !')
+            }
+
             break;
 
         default:
@@ -91,7 +126,7 @@ rl.on('line', (answer) => {
             break;
     }
 
-    functions.saveAlteration(tasks)
+
     console.log('')
 
 });
