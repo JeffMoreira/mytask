@@ -7,7 +7,7 @@ const { stdin: input, stdout: output } = require('node:process');
 
 
 
-const tasks = functions.loadOrCreateJSON();
+tasks = functions.loadOrCreateJSON();
 const rl = readline.createInterface({ input, output });
 
 rl.on('line', (answer) => {
@@ -47,7 +47,9 @@ rl.on('line', (answer) => {
             console.log("Task ", id, ' atualizada com sucesso! ')
             break;
         case 'del':
-            console.log('delete task')
+            id = command[1]
+            tasks = tasks.filter(obj => obj.id !== id);
+            console.log("Task ", id, ' deletada com sucesso! ')
             break;
         case 'list':
 
