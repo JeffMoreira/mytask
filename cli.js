@@ -12,17 +12,17 @@ const rl = readline.createInterface({ input, output });
 
 rl.on('line', (answer) => {
     command = answer.match(/"[^"]*"|\S+/g);
-    
+
+     // Função para formatar a data como AAAA-MM-DD
+    const dataAtual = new Date();
+    const formatoData = dataAtual.getFullYear() + '-' +
+                String(dataAtual.getMonth() + 1).padStart(2, '0') + '-' +
+                String(dataAtual.getDate()).padStart(2, '0');
+
     switch (command[0]) {
         case 'add':
             taskDesc = command[1].replaceAll('"', '')
             proxId = Number(tasks.reduce((max, obj) => obj.id > max ? obj.id : max, 0)) + 1;
-            const dataAtual = new Date();
-
-            // Função para formatar a data como AAAA-MM-DD
-            const formatoData = dataAtual.getFullYear() + '-' +
-                String(dataAtual.getMonth() + 1).padStart(2, '0') + '-' +
-                String(dataAtual.getDate()).padStart(2, '0');
 
             newTask = {
                 id : proxId.toString(),
@@ -36,7 +36,15 @@ rl.on('line', (answer) => {
             console.log("Task criada com sucesso !")
             break;
         case 'update':
-            console.log('update task')
+            id = command[1]
+            taskToUpdate = tasks.find(obj => obj.id === id);
+            if (taskToUpdate){
+                taskToUpdate.description = command[2].replaceAll('"', '')
+                taskToUpdate.updatedAt = formatoData
+            }else{
+                console.log('Task não encontrada !')
+            }
+            console.log("Task ", id, ' atualizada com sucesso! ')
             break;
         case 'del':
             console.log('delete task')
